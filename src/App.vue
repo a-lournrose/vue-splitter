@@ -1,32 +1,26 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <splitter>
+    <splitter-panel size="20">
+      <div>Первая панель</div>
+    </splitter-panel>
+    <splitter-panel>
+      <div>Вторая панель</div>
+    </splitter-panel>
+  </splitter>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Splitter from "@/components/UI/Splitter/Splitter.vue";
+import SplitterPanel from "@/components/UI/Splitter/SplitterPanel.vue";
+
+export default {
+  components: {Splitter, SplitterPanel}
 }
+</script>
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+<style lang="scss">
+* {
+  box-sizing: border-box;
+  margin: 0;
 }
 </style>
