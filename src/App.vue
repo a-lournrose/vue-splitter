@@ -1,11 +1,12 @@
 <template>
-  <splitter>
-    <splitter-panel size="20">
+  <splitter style="height: 500px">
+    <splitter-panel>
       <div>Первая панель</div>
     </splitter-panel>
-    <splitter-panel>
-      <div>Вторая панель</div>
-    </splitter-panel>
+    <splitter layout="vertical">
+      <splitter-panel>Верхняя панель</splitter-panel>
+      <splitter-panel>Нижняя панель</splitter-panel>
+    </splitter>
   </splitter>
 </template>
 
