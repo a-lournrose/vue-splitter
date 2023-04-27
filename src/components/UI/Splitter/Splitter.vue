@@ -2,10 +2,13 @@
   <div :class="{
     'splitter-horizontal': layout === 'horizontal',
     'splitter-vertical': layout === 'vertical',
-  }">
+  }" @mousemove="onSplitterMouseMove">
     <template v-for="(panel, i) in panels">
       <splitter-panel-renderer :v-node="panel"/>
-      <div class="gutter" v-if="i !== panels.length - 1">
+      <div class="gutter"
+           v-if="i !== panels.length - 1"
+           @mousedown="onGutterMouseDown"
+      >
         <div class="gutter__handle"></div>
       </div>
     </template>
@@ -26,6 +29,14 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      gutterElement: null,
+      prevPanelElement: null,
+      nextPanelElement: null,
+      active: false,
+    }
+  },
   computed: {
     panels() {
       const panels = [];
@@ -33,6 +44,44 @@ export default {
         panels.push(el);
       })
       return panels;
+    }
+  },
+  methods: {
+    onSplitterMouseMove(e) {
+      if (e.buttons === 0 || e.which === 0) {
+        this.active = false;
+      }
+      this.onMove(e);
+    },
+    onGutterMouseDown(e) {
+      this.gutterElement = e.currentTarget;
+      this.prevPanelElement = this.gutterElement.previousElementSibling;
+      this.nextPanelElement = this.gutterElement.nextElementSibling;
+      this.active = true;
+    },
+    onMove(e) {
+      let offset = 0;
+      let gutterElement = e.currentTarget;
+      let percent = 0;
+      if (this.active) {
+        if (this.layout === 'horizontal') {
+          while (gutterElement) {
+            offset += gutterElement.offsetLeft;
+            gutterElement = gutterElement.offsetParent;
+          }
+          percent = Math.floor(((e.pageX - offset) / e.currentTarget.offsetWidth) * 10000) / 100;
+        } else {
+          while (gutterElement) {
+            offset += gutterElement.offsetTop;
+            gutterElement = gutterElement.offsetParent;
+          }
+          percent = Math.floor(((e.pageY - offset) / e.currentTarget.offsetHeight) * 10000) / 100;
+        }
+        console.log(e)
+        this.prevPanelElement.style.flexBasis = percent + '%';
+        this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
+        this.$emit('resize', e);
+      }
     }
   }
 }
@@ -45,14 +94,9 @@ export default {
 
   .gutter {
     cursor: col-resize;
-
-    &__handle {
-      height: 24px;
-      width: 100%;
-      background-color: #bbbbbb;
-    }
   }
 }
+
 .splitter-vertical {
   display: flex;
   flex-direction: column;
@@ -60,10 +104,27 @@ export default {
 
   .gutter {
     cursor: row-resize;
+
   }
 }
+
 .gutter {
   flex-basis: 4px;
   background-color: #edeeef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.splitter-horizontal > .gutter > .gutter__handle {
+  height: 24px;
+  width: 100%;
+  background-color: #bbbbbb;
+}
+
+.splitter-vertical > .gutter > .gutter__handle {
+  width: 24px;
+  height: 100%;
+  background-color: #bbbbbb;
 }
 </style>

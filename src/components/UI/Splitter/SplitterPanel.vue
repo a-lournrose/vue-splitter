@@ -9,6 +9,14 @@ export default {
   props: {
     size: {
       type: Number
+    },
+    minSize: {
+      type: Number,
+      default: 0
+    },
+    maxSize: {
+      type: Number,
+      default: 100
     }
   }
 }
