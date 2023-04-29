@@ -11,10 +11,12 @@ export default {
       type: Number
     },
     minSize: {
-      type: Number
+      type: Number,
+      default: 0
     },
     maxSize: {
-      type: Number
+      type: Number,
+      default: 100
     }
   }
 }

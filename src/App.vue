@@ -1,37 +1,16 @@
 <template>
-  <splitter style="height: 100vh" @resize="resizeSplitter">
-    <splitter-panel :size='20' :max-size='40' :min-size='40'>
-      <div></div>
-    </splitter-panel>
-    <splitter layout="vertical" @resize="resizeSplitter">
-      <splitter-panel>
-        <Map @getMap="mapHandler"></Map>
-      </splitter-panel>
-      <splitter-panel :size='20'></splitter-panel>
-    </splitter>
-  </splitter>
+  <div>
+    <Header/>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import Splitter from "@/components/UI/Splitter/Splitter.vue";
-import SplitterPanel from "@/components/UI/Splitter/SplitterPanel.vue";
-import Map from "@/components/Map/Map.vue";
+import Header from "@/components/Header/Header.vue";
 
 export default {
-  data() {
-    return {
-      layer: null
-    }
-  },
-  components: {Splitter, SplitterPanel, Map},
-  methods: {
-    mapHandler(m) {
-      this.layer = m;
-    },
-    resizeSplitter() {
-      this.layer.updateSize();
-    }
-  }
+  components: {Header}
+
 }
 </script>
 
@@ -39,5 +18,6 @@ export default {
 * {
   box-sizing: border-box;
   margin: 0;
+  font-family: Arial, sans-serif;
 }
 </style>

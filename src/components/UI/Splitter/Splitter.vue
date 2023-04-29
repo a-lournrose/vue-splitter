@@ -34,6 +34,8 @@ export default {
       gutterElement: null,
       prevPanelElement: null,
       nextPanelElement: null,
+      prevPanelElementProps: null,
+      nextPanelElementProps: null,
       active: false,
     }
   },
@@ -58,8 +60,9 @@ export default {
       this.gutterElement = e.currentTarget;
       this.prevPanelElement = this.gutterElement.previousElementSibling;
       this.nextPanelElement = this.gutterElement.nextElementSibling;
+      this.prevPanelElementProps = this.prevPanelElement.__vue__.$props.vNode.componentOptions.propsData;
+      this.nextPanelElementProps = this.nextPanelElement.__vue__.$props.vNode.componentOptions.propsData;
       this.active = true;
-      console.log(e);
     },
     onMove(e) {
       let offset = 0;
@@ -72,15 +75,14 @@ export default {
             gutterElement = gutterElement.offsetParent;
           }
           percent = Math.floor(((e.pageX - offset) / e.currentTarget.offsetWidth) * 10000) / 100;
-          console.log(percent)
         } else {
           while (gutterElement) {
             offset += gutterElement.offsetTop;
             gutterElement = gutterElement.offsetParent;
           }
           percent = Math.floor(((e.pageY - offset) / e.currentTarget.offsetHeight) * 10000) / 100;
-          console.log(percent)
         }
+        console.log(percent, this.prevPanelElementProps, this.nextPanelElementProps)
         this.prevPanelElement.style.flexBasis = percent + '%';
         this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
         this.$emit('resize', e);
