@@ -1,13 +1,13 @@
 <template>
   <splitter style="height: 100vh" @resize="resizeSplitter">
-    <splitter-panel :size='20'>
-      <div>Текст, который находится в левой панели</div>
+    <splitter-panel :size='20' :max-size='40' :min-size='40'>
+      <div></div>
     </splitter-panel>
     <splitter layout="vertical" @resize="resizeSplitter">
       <splitter-panel>
         <Map @getMap="mapHandler"></Map>
       </splitter-panel>
-      <splitter-panel :size='20'>Текст, который находится в нижней панели</splitter-panel>
+      <splitter-panel :size='20'></splitter-panel>
     </splitter>
   </splitter>
 </template>

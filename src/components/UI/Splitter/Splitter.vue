@@ -54,10 +54,12 @@ export default {
       this.onMove(e);
     },
     onGutterMouseDown(e) {
+      e.preventDefault();
       this.gutterElement = e.currentTarget;
       this.prevPanelElement = this.gutterElement.previousElementSibling;
       this.nextPanelElement = this.gutterElement.nextElementSibling;
       this.active = true;
+      console.log(e);
     },
     onMove(e) {
       let offset = 0;
@@ -70,14 +72,15 @@ export default {
             gutterElement = gutterElement.offsetParent;
           }
           percent = Math.floor(((e.pageX - offset) / e.currentTarget.offsetWidth) * 10000) / 100;
+          console.log(percent)
         } else {
           while (gutterElement) {
             offset += gutterElement.offsetTop;
             gutterElement = gutterElement.offsetParent;
           }
           percent = Math.floor(((e.pageY - offset) / e.currentTarget.offsetHeight) * 10000) / 100;
+          console.log(percent)
         }
-        console.log(e)
         this.prevPanelElement.style.flexBasis = percent + '%';
         this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
         this.$emit('resize', e);
