@@ -7,7 +7,7 @@
       <splitter-panel-renderer :v-node="panel"/>
       <div class="gutter"
            v-if="i !== panels.length - 1"
-           @mousedown="onGutterMouseDown"
+           @mousedown="onGutterMouseDown($event, i)"
       >
         <div class="gutter__handle"></div>
       </div>
@@ -55,18 +55,27 @@ export default {
       }
       this.onMove(e);
     },
-    onGutterMouseDown(e) {
+    onGutterMouseDown(e, index) {
       e.preventDefault();
       this.gutterElement = e.currentTarget;
       this.prevPanelElement = this.gutterElement.previousElementSibling;
       this.nextPanelElement = this.gutterElement.nextElementSibling;
-      this.prevPanelElementProps = this.prevPanelElement.__vue__.$props.vNode.componentOptions.propsData;
-      this.nextPanelElementProps = this.nextPanelElement.__vue__.$props.vNode.componentOptions.propsData;
+      this.prevPanelElementProps = this.panels[index].componentOptions.propsData;
+      this.nextPanelElementProps = this.panels[index + 1].componentOptions.propsData;
       this.active = true;
     },
+    validateSize(percent) {
+      if(
+          percent > (this.prevPanelElementProps.minSize || 0) &&
+          percent < (this.prevPanelElementProps.maxSize || 100) &&
+          (100 - percent) > (this.nextPanelElementProps.minSize || 0) &&
+          (100 - percent) < (this.nextPanelElementProps.maxSize || 100)
+      ) return true;
+      return false;
+    },
     onMove(e) {
-      let offset = 0;
       let gutterElement = e.currentTarget;
+      let offset = 0;
       let percent = 0;
       if (this.active) {
         if (this.layout === 'horizontal') {
@@ -82,12 +91,7 @@ export default {
           }
           percent = Math.floor(((e.pageY - offset) / e.currentTarget.offsetHeight) * 10000) / 100;
         }
-        if(
-            (percent > (this.prevPanelElementProps.minSize || 0)) &&
-            (percent < (this.prevPanelElementProps.maxSize || 100)) &&
-            ((100 - percent) > (this.nextPanelElementProps.minSize || 0)) &&
-            ((100 - percent) < (this.nextPanelElementProps.maxSize || 100))
-        ) {
+        if(this.validateSize(percent)) {
           this.prevPanelElement.style.flexBasis = percent + '%';
           this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
           this.$emit('resize', e);
@@ -115,7 +119,6 @@ export default {
 
   .gutter {
     cursor: row-resize;
-
   }
 }
 
