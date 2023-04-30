@@ -1,5 +1,5 @@
 <template>
-  <div :style="[size ? {flexBasis: size + '%'} : {flexGrow: 1}]">
+  <div :style="[size ? {flexBasis: size + '%', display: 'flex'} : {flexGrow: 1, display: 'flex'}]">
     <slot></slot>
   </div>
 </template>

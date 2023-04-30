@@ -82,10 +82,16 @@ export default {
           }
           percent = Math.floor(((e.pageY - offset) / e.currentTarget.offsetHeight) * 10000) / 100;
         }
-        console.log(percent, this.prevPanelElementProps, this.nextPanelElementProps)
-        this.prevPanelElement.style.flexBasis = percent + '%';
-        this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
-        this.$emit('resize', e);
+        if(
+            (percent > (this.prevPanelElementProps.minSize || 0)) &&
+            (percent < (this.prevPanelElementProps.maxSize || 100)) &&
+            ((100 - percent) > (this.nextPanelElementProps.minSize || 0)) &&
+            ((100 - percent) < (this.nextPanelElementProps.maxSize || 100))
+        ) {
+          this.prevPanelElement.style.flexBasis = percent + '%';
+          this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
+          this.$emit('resize', e);
+        }
       }
     }
   }

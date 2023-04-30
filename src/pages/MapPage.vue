@@ -7,7 +7,7 @@
       <splitter-panel>
         <MapContainer @afterMounted="onMapMounted"></MapContainer>
       </splitter-panel>
-      <splitter-panel :size='20'>
+      <splitter-panel :size='20' :max-size="40">
         <div>Текст, который располагается внизу</div>
       </splitter-panel>
     </splitter>
@@ -36,7 +36,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
