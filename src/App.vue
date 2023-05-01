@@ -7,9 +7,13 @@
 
 <script>
 import Header from "@/components/Header/Header.vue";
+import M from 'materialize-css'
 
 export default {
-  components: {Header}
+  components: {Header},
+  mounted () {
+    M.AutoInit()
+  },
 }
 </script>
 

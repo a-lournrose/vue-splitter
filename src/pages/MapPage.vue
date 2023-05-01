@@ -1,5 +1,5 @@
 <template>
-  <splitter style="height: calc(100vh - 60px)" @resize="onResize">
+  <splitter style="height: calc(100vh - 64px)" @resize="onResize">
     <splitter-panel :size='20' :max-size='40' :min-size='10'>
       <div>Текст, который располагается слева</div>
     </splitter-panel>
