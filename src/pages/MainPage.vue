@@ -4,9 +4,17 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-  .wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+<script>
+import DownTable from "@/components/Tables/DownTable.vue";
+
+export default {
+  components: {DownTable}
+}
+</script>
+
+<style scoped>
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
 </style>

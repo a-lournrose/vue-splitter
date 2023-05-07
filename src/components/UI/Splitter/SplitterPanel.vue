@@ -1,5 +1,5 @@
 <template>
-  <div :style="[size ? {flexBasis: size + '%', display: 'flex'} : {flexGrow: 1, display: 'flex'}]">
+  <div :style="[size ? {flexBasis: size + '%'} : {flexGrow: 1}]" class="panel">
     <slot></slot>
   </div>
 </template>
@@ -21,3 +21,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.panel {
+  display: flex;
+  overflow: auto;
+}
+</style>

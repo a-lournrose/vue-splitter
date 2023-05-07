@@ -65,7 +65,7 @@ export default {
       this.active = true;
     },
     validateSize(percent) {
-      if(
+      if (
           percent > (this.prevPanelElementProps.minSize || 0) &&
           percent < (this.prevPanelElementProps.maxSize || 100) &&
           (100 - percent) > (this.nextPanelElementProps.minSize || 0) &&
@@ -91,7 +91,7 @@ export default {
           }
           percent = Math.floor(((e.pageY - offset) / e.currentTarget.offsetHeight) * 10000) / 100;
         }
-        if(this.validateSize(percent)) {
+        if (this.validateSize(percent)) {
           this.prevPanelElement.style.flexBasis = percent + '%';
           this.nextPanelElement.style.flexBasis = (100 - percent) + '%';
           this.$emit('resize', e);

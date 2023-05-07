@@ -8,10 +8,11 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "materialize-css": "^1.0.0-rc.2",
+    "material-design-icons-iconfont": "6.1.0",
     "ol": "^7.1.0",
     "vue": "^2.6.14",
-    "vue-router": "^3.5.1"
+    "vue-router": "^3.5.1",
+    "vuetify": "^2.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
@@ -20,7 +21,9 @@
     "@vue/cli-service": "~5.0.0",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
-    "vue-template-compiler": "^2.6.14"
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.7.0"
   },
   "browserslist": [
     "> 1%",

@@ -1,23 +1,19 @@
 <template>
-  <div>
+  <v-app>
     <Header/>
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import Header from "@/components/Header/Header.vue";
-import M from 'materialize-css'
 
 export default {
-  components: {Header},
-  mounted () {
-    M.AutoInit()
-  },
+  components: {Header}
 }
 </script>
 
-<style lang="scss">
+<style>
 * {
   box-sizing: border-box;
   margin: 0;
