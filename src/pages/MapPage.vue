@@ -24,7 +24,7 @@ export default {
   components: {DownTable, Splitter, SplitterPanel, MapContainer},
   data() {
     return {
-      map: null
+      map: null,
     }
   },
   methods: {

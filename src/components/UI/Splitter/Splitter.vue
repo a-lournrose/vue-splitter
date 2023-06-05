@@ -3,10 +3,10 @@
     'splitter-horizontal': layout === 'horizontal',
     'splitter-vertical': layout === 'vertical',
   }" @mousemove="onSplitterMouseMove">
-    <template v-for="(panel, i) in panels">
+    <template v-for="(panel, i) in $slots.default">
       <splitter-panel-renderer :v-node="panel"/>
       <div class="gutter"
-           v-if="i !== panels.length - 1"
+           v-if="i !== $slots.default.length - 1"
            @mousedown="onGutterMouseDown($event, i)"
       >
         <div class="gutter__handle"></div>
@@ -15,11 +15,14 @@
   </div>
 </template>
 <script>
-import SplitterPanelRenderer from "@/components/UI/Splitter/SplitterPanelRenderer.vue";
-
 export default {
   name: 'Splitter',
-  components: {SplitterPanelRenderer},
+  components: {
+    SplitterPanelRenderer: {
+      functional: true,
+      render: (h, ctx) => ctx.props.vNode
+    }
+  },
   props: {
     layout: {
       type: String,
@@ -39,15 +42,6 @@ export default {
       active: false,
     }
   },
-  computed: {
-    panels() {
-      const panels = [];
-      this.$slots.default.forEach(el => {
-        panels.push(el);
-      })
-      return panels;
-    }
-  },
   methods: {
     onSplitterMouseMove(e) {
       if (e.buttons === 0 || e.which === 0) {
@@ -60,18 +54,17 @@ export default {
       this.gutterElement = e.currentTarget;
       this.prevPanelElement = this.gutterElement.previousElementSibling;
       this.nextPanelElement = this.gutterElement.nextElementSibling;
-      this.prevPanelElementProps = this.panels[index].componentOptions.propsData;
-      this.nextPanelElementProps = this.panels[index + 1].componentOptions.propsData;
+      this.prevPanelElementProps = this.$slots.default[index].componentOptions.propsData;
+      this.nextPanelElementProps = this.$slots.default[index + 1].componentOptions.propsData;
       this.active = true;
     },
     validateSize(percent) {
-      if (
+      return (
           percent > (this.prevPanelElementProps.minSize || 0) &&
           percent < (this.prevPanelElementProps.maxSize || 100) &&
           (100 - percent) > (this.nextPanelElementProps.minSize || 0) &&
           (100 - percent) < (this.nextPanelElementProps.maxSize || 100)
-      ) return true;
-      return false;
+      )
     },
     onMove(e) {
       let gutterElement = e.currentTarget;
